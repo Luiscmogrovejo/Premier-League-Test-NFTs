@@ -449,9 +449,41 @@ const navigate = useNavigate();
               </button>
             </div>
           </div>
+          <div className="bg-slate-300 text-6xl font-bold mt-6 p-6 text-center">
+            PLAY AND TRADE
+          </div>
+          <div className="px-24 py-12 text-2xl bg-slate-200">
+            Welcome to the ultimate Premier League Football NFT Game! Immerse
+            yourself in the exhilarating world of football by minting,
+            collecting, and trading your favorite Premier League players in the
+            form of Non-Fungible Tokens (NFTs). Our innovative and user-friendly
+            platform offers an unparalleled experience for both avid football
+            fans and NFT enthusiasts alike, providing an interactive and
+            engaging way to connect with the sport you love. In our
+            groundbreaking game, you'll have the chance to mint unique Premier
+            League player NFTs, showcasing the star players from all 20 clubs.
+            Each NFT is a digital collectible that represents a player's in-game
+            attributes, individuality, and accomplishments. With our
+            state-of-the-art blockchain technology, you can rest assured that
+            your collection is secure, verifiable, and truly one-of-a-kind.
+            Unleash your strategic prowess as you build and customize your dream
+            team, showcasing your football knowledge and acumen. Engage in
+            thrilling player trades with fellow enthusiasts, participate in
+            special events, and climb the ranks to become the ultimate football
+            NFT collector. Join us now and embark on an unforgettable journey
+            into the world of Premier League Football NFTs, where passion for
+            the beautiful game meets cutting-edge technology. Let's create
+            history together!
+          </div>
+          <img
+            src="/Field.png"
+            className="h-full w-full z-0"
+            alt="Hero"
+          />
+          
         </div>
       </main>
-      <footer className="text-center text-xl font-semibold bg-slate-100 p-4 sticky">
+      <footer className="text-center text-xl font-semibold bg-slate-100 p-4">
         THIS IS A GAMEON TEST
       </footer>
     </div>
