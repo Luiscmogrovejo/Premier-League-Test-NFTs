@@ -136,7 +136,7 @@ const clientId =
     const init = async () => {
       try {
         const web3auth = new Web3Auth({
-          clientId,
+          clientId: clientId,
           chainConfig: {
             chainNamespace: CHAIN_NAMESPACES.EIP155,
             chainId: "0x13881", // Mumbai Polygon Testnet Chain ID
