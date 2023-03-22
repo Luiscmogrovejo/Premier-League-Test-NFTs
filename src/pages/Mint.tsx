@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import SwiperCore, {
+import {
   Navigation,
   Pagination,
   Scrollbar,
@@ -247,7 +247,7 @@ function Mint() {
     setProvider(web3authProvider);
     uiConsole("Logged in Successfully!");
   };
-
+  // eslint-disable-next-line
   const authenticateUser = async () => {
     if (!web3auth) {
       uiConsole("web3auth not initialized yet");
@@ -256,7 +256,7 @@ function Mint() {
     const idToken = await web3auth.authenticateUser();
     uiConsole(idToken);
   };
-
+  // eslint-disable-next-line
   const getUserInfo = async () => {
     if (!web3auth) {
       uiConsole("web3auth not initialized yet");
@@ -274,7 +274,7 @@ function Mint() {
     await web3auth.logout();
     setProvider(null);
   };
-
+  // eslint-disable-next-line
   const showWCM = async () => {
     if (!torusPlugin) {
       uiConsole("torus plugin not initialized yet");
@@ -283,7 +283,7 @@ function Mint() {
     torusPlugin.showWalletConnectScanner();
     uiConsole();
   };
-
+  // eslint-disable-next-line
   const initiateTopUp = async () => {
     if (!torusPlugin) {
       uiConsole("torus plugin not initialized yet");
@@ -297,7 +297,7 @@ function Mint() {
       chainNetwork: "mainnet",
     });
   };
-
+  // eslint-disable-next-line
   const getChainId = async () => {
     if (!provider) {
       uiConsole("provider not initialized yet");
@@ -307,7 +307,7 @@ function Mint() {
     const chainId = await rpc.getChainId();
     uiConsole(chainId);
   };
-
+  // eslint-disable-next-line
   const addChain = async () => {
     if (!provider) {
       uiConsole("provider not initialized yet");
@@ -326,7 +326,7 @@ function Mint() {
     await web3auth?.addChain(newChain);
     uiConsole("New Chain Added");
   };
-
+  // eslint-disable-next-line
   const switchChain = async () => {
     if (!provider) {
       uiConsole("provider not initialized yet");
@@ -351,7 +351,7 @@ function Mint() {
     }
     return sliceAddress(address[0]);
   }, [provider]);
-
+  // eslint-disable-next-line
   const getBalance = async () => {
     if (!provider) {
       uiConsole("provider not initialized yet");
@@ -361,7 +361,7 @@ function Mint() {
     const balance = await rpc.getBalance();
     uiConsole(balance);
   };
-
+  // eslint-disable-next-line
   const sendTransaction = async () => {
     if (!provider) {
       uiConsole("provider not initialized yet");
@@ -371,7 +371,7 @@ function Mint() {
     const receipt = await rpc.sendTransaction();
     uiConsole(receipt);
   };
-
+  // eslint-disable-next-line
   const signMessage = async () => {
     if (!provider) {
       uiConsole("provider not initialized yet");
@@ -381,7 +381,7 @@ function Mint() {
     const signedMessage = await rpc.signMessage();
     uiConsole(signedMessage);
   };
-
+  // eslint-disable-next-line
   const getPrivateKey = async () => {
     if (!provider) {
       uiConsole("provider not initialized yet");
