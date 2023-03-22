@@ -1,6 +1,8 @@
 # Getting Started
 These instructions will help you clone and run a React app locally on your machine.
 
+![alt text](image.jpg)
+
 ## Prerequisites
 To run a React app locally, you'll need to have Node.js and npm (Node Package Manager) installed on your machine. You can download Node.js from the official website: https://nodejs.org/
 
