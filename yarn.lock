@@ -3462,7 +3462,7 @@
     "js-sha3" "0.8.0"
     "query-string" "6.13.5"
 
-"@walletconnect/utils@^2.4.10", "@walletconnect/utils@^2.x", "@walletconnect/utils@2.5.1":
+"@walletconnect/utils@^2.4.10", "@walletconnect/utils@^2.5.1", "@walletconnect/utils@^2.x", "@walletconnect/utils@2.5.1":
   "integrity" "sha512-+Pr3kj0CjxEeSxoRtj9lOfsDRLjwI5RyuwASUy4mcTGil59rdAK0Z7Uht3/+HEXB05AUyEJihpQEwworcGu/uw=="
   "resolved" "https://registry.npmjs.org/@walletconnect/utils/-/utils-2.5.1.tgz"
   "version" "2.5.1"
