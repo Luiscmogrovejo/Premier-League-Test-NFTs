@@ -1,11 +1,5 @@
 import React, { useRef } from "react";
-import {
-  Navigation,
-  Pagination,
-  Scrollbar,
-  A11y,
-  Mousewheel,
-} from "swiper";
+import { Navigation, Pagination, Scrollbar, A11y, Mousewheel } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.min.css";
 import { debounce } from "lodash";
@@ -17,6 +11,7 @@ import {
   createHeros,
   totalSupply,
   fetchAccount,
+  setTokenURI,
 } from "../components/contractWeb3";
 import { useCallback, useEffect, useState } from "react";
 import { Web3Auth } from "@web3auth/modal";
@@ -30,12 +25,54 @@ import {
 } from "@web3auth/wallet-connect-v2-adapter";
 import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import { TorusWalletAdapter } from "@web3auth/torus-evm-adapter";
-
-
+import { create as ipfsHttpClient } from "ipfs-http-client";
+import manu from "../images/manu.jpg";
+import mergeImages from "merge-images";
 
 function Mint() {
-const clientId =
-  "BI21cwkjkcxw0KjiLxEa1_r5bn4DA1gCvKYU9X1u-kSQB8ik-fFlpBoBfeQmSBEPVLiu5k_iBA9qKQXeHPQ9wnw";
+  const projectId = process.env.NEXT_PUBLIC_PROJECT_ID_INFURA;
+  const projectSecret = process.env.NEXT_PUBLIC_PROJECT_SECRET_INFURA;
+  const auth =
+    "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64");
+  const client = ipfsHttpClient({
+    host: "ipfs.infura.io",
+    port: 5001,
+    protocol: "https",
+    headers: {
+      authorization: auth,
+    },
+  });
+  async function addIPFS(nft: any) {
+    console.log("INIT");
+
+    try {
+      
+      const description = "This is a Premier NFT";
+      const external_url = "https://www.premiernft.io/";
+
+      const data = JSON.stringify({
+        name: `Premier NFT`,
+        description,
+        external_url,
+        id: nft.heroId,
+        background_color: "00FFFFFF",
+        attributes: {
+          tokenId: nft.heroId,
+          team: "Chelsea",
+        },
+      });
+
+      console.log("Metadata JSON:", data);
+
+      const added2 = await client.add(data);
+      setTokenURI(nft.heroId, added2.path);
+      console.log("Metadata added to IPFS:", added2);
+    } catch (error) {
+      console.error("Error while adding data to IPFS:", error);
+    }
+  }
+  const clientId =
+    "BI21cwkjkcxw0KjiLxEa1_r5bn4DA1gCvKYU9X1u-kSQB8ik-fFlpBoBfeQmSBEPVLiu5k_iBA9qKQXeHPQ9wnw";
   const [nfts, setNfts] = React.useState<Hero[]>([]);
   const [supply, setSupply] = React.useState<number>(0);
   const [balance, setBalance] = React.useState<number[]>([]);
@@ -67,11 +104,13 @@ const clientId =
       setNfts(newArray);
       setLoading(false);
     }
-  }, [balance]);
+    // eslint-disable-next-line
+  }, [account, balance]);
 
   const memoizedFetchBalance = useCallback(async () => {
     setBalance(await herosOf(account));
-  }, [account]);
+    // eslint-disable-next-line
+  }, [account, balance]);
 
   React.useEffect(() => {
     const accountSet = async () => {
@@ -84,7 +123,8 @@ const clientId =
     nftNumber();
     memoizedFetchBalance();
     setNewNFTS();
-  }, [account, balance, memoizedFetchBalance, setNewNFTS]);
+    // eslint-disable-next-line
+  }, [account, balance]);
 
   const isMobile =
     typeof window !== "undefined"
@@ -106,6 +146,7 @@ const clientId =
         ? true
         : false
       : false;
+      
   function getImage(input: any) {
     const slic = input.slice(0, 1);
     const slice = slic[0];
@@ -131,6 +172,8 @@ const clientId =
   const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(
     null
   );
+
+
 
   useEffect(() => {
     const init = async () => {
@@ -237,7 +280,7 @@ const clientId =
     };
 
     init();
-  }, []);
+  }, [account]);
 
   const login = async () => {
     if (!web3auth) {
@@ -336,7 +379,11 @@ const clientId =
     await web3auth?.switchChain({ chainId: "0x5" });
     uiConsole("Chain Switched");
   };
-
+    function sliceAddress(address: string): string {
+      const prefix = address.slice(0, 6);
+      const suffix = address.slice(-4);
+      return `${prefix}...${suffix}`;
+    }
   const getAccounts = useCallback(async () => {
     if (!provider) {
       uiConsole("provider not initialized yet");
@@ -345,12 +392,8 @@ const clientId =
     const rpc = new RPC(provider);
     const address = await rpc.getAccounts();
     uiConsole(address);
-    function sliceAddress(address: string): string {
-      const prefix = address.slice(0, 6);
-      const suffix = address.slice(-4);
-      return `${prefix}...${suffix}`;
-    }
-    return sliceAddress(address[0]);
+
+    return address[0];
   }, [provider]);
   // eslint-disable-next-line
   const getBalance = async () => {
@@ -455,20 +498,23 @@ const clientId =
             onClick={() => setShowMenu(false)}
             className=" border-2 border-red-600 rounded-xl py-3 px-6 font-bold text-transparent text-md bg-clip-text bg-gradient-to-r from-slate-100 to-yellow-200"
           >
-            {userWallet}
+            {sliceAddress(userWallet ? userWallet : "")}
           </button>
         ) : (
           <button
             onClick={() => setShowMenu(true)}
             className=" border-2 border-red-600 rounded-xl py-3 px-6 font-bold text-transparent text-md bg-clip-text bg-gradient-to-r from-slate-100 to-yellow-200"
           >
-            {userWallet}
+            {sliceAddress(userWallet ? userWallet : "")}
           </button>
         )}
       </div>
     </div>
   );
-
+function formatTimestamp(timestamp: number): string {
+  const date = new Date(timestamp * 1000); // Multiply by 1000 to convert seconds to milliseconds
+  return date.toLocaleString("en-US");
+}
   return (
     <div className="flex flex-col h-screen justify-between">
       <div>
@@ -581,11 +627,13 @@ const clientId =
                             style={{ textAlign: "center", padding: "4px" }}
                           >
                             <div className="flex justify-center">
-                              <img
-                                src={getImage(ep.dna)}
-                                alt="cat-img"
-                                className="max-w-[18rem]"
-                              />
+                              <button onClick={() => addIPFS(ep)}>
+                                <img
+                                  src={getImage(ep.dna)}
+                                  alt="cat-img"
+                                  className="max-w-[18rem]"
+                                />
+                              </button>
                             </div>
 
                             <p
@@ -614,6 +662,12 @@ const clientId =
                                 This is Player #{ep.heroId}
                                 <br />
                                 DNA: {ep.genes}
+                                <br />
+                                Genes: {ep.dna}
+                                <br />
+                                Created: {formatTimestamp(ep.createdTime)}
+                                <br />
+                                Owner: {sliceAddress(ep.owner)}
                               </span>
                             </p>
                           </div>
