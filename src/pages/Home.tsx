@@ -18,7 +18,7 @@ import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import { TorusWalletAdapter } from "@web3auth/torus-evm-adapter";
 import { useNavigate } from "react-router-dom";
 const clientId =
-  "BEglQSgt4cUWcj6SKRdu5QkOXTsePmMcusG5EAoyjyOYKlVRjIF1iCNnMOTfpzCiunHRrMui8TIwQPXdkQ8Yxuk";
+  "BI21cwkjkcxw0KjiLxEa1_r5bn4DA1gCvKYU9X1u-kSQB8ik-fFlpBoBfeQmSBEPVLiu5k_iBA9qKQXeHPQ9wnw";
 
 function Home() {
   const [supply, setSupply] = React.useState<number>(0);
