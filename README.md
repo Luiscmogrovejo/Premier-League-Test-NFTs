@@ -1,66 +1,33 @@
-# Web3Auth x React Demo Application
+# Getting Started
+These instructions will help you clone and run a React app locally on your machine.
 
-## Questions
+## Prerequisites
+To run a React app locally, you'll need to have Node.js and npm (Node Package Manager) installed on your machine. You can download Node.js from the official website: https://nodejs.org/
 
-Ask us on our
-[Github Discussion Board](https://github.com/orgs/Web3Auth/discussions) or reach
-out to our [Discord](https://discord.gg/web3auth).
+## Installing
+1. Clone the repository to your local machine using Git.
+``git clone https://github.com/Luiscmogrovejo/Premier-League-Test-NFTs``
 
-## Important Links
+2. Navigate to the project directory.
+``cd premier-league-test-nfts``
 
-- [Website](https://web3auth.io)
-- [Docs](https://web3auth.io/docs)
-- [Guides](https://web3auth.io/docs/guides)
-- [SDK / API References](https://web3auth.io/docs/sdk)
-- [Pricing](https://web3auth.io/pricing.html)
-- [Github Discussion Board](https://github.com/orgs/Web3Auth/discussions)
+3. Install the required dependencies using npm.
+``npm install``
 
-## Available Scripts
+## Running
+To start the development server, run the following command:
+``npm start``
+Open your web browser and navigate to http://localhost:3000 to view the app.
 
-In the project directory, you can run:
+You can now make changes to the code and see them reflected in the app as you save.
 
-### `npm start`
+## Building
+To create a production build of the app, run the following command:
+``npm run build``
+The built files will be placed in the build directory, which can be deployed to a web server.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Contributing
+Please read CONTRIBUTING.md for details on our code of conduct and the process for submitting pull requests.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests)
-for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best
-performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about
-[deployment](https://facebook.github.io/create-react-app/docs/deployment) for
-more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can
-`eject` at any time. This command will remove the single build dependency from
-your project.
-
-Instead, it will copy all the configuration files and the transitive
-dependencies (webpack, Babel, ESLint, etc) right into your project so you have
-full control over them. All of the commands except `eject` will still work, but
-they will point to the copied scripts so you can tweak them. At this point
-you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for
-small and middle deployments, and you shouldn’t feel obligated to use this
-feature. However we understand that this tool wouldn’t be useful if you couldn’t
-customize it when you are ready for it.
+## License
+This project is licensed under the MIT License - see the LICENSE.md file for details.
