@@ -53,7 +53,7 @@ const clientId =
   const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(
     null
   );
-
+const price = "0.01 Matic";
   useEffect(() => {
     const init = async () => {
       try {
@@ -443,9 +443,14 @@ const clientId =
               </button>
             </div>
           </div>
-          <div className="bg-slate-300 text-6xl font-bold mt-6 p-6 text-center">
-            PLAY AND TRADE
-          </div>
+
+            <div className="bg-slate-300 text-6xl font-bold mt-6 p-6 text-center grid justify-center items-center">
+              PLAY AND TRADE
+              <br />
+              <div className="text-3xl text-red-600 flex gap-2 items-center mt-2">
+                Price <div className="bg-yellow-300 p-2 rounded-xl">{price}</div> per Player
+              </div>
+            </div>        
           <div className="px-24 py-12 text-2xl bg-slate-200">
             Welcome to the ultimate Premier League Football NFT Game! Immerse
             yourself in the exhilarating world of football by minting,
