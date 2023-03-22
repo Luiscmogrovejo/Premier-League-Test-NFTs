@@ -120,7 +120,7 @@ function Home() {
         const metamaskAdapter = new MetamaskAdapter({
           clientId,
           sessionTime: 3600,
-          web3AuthNetwork: "cyan",
+          web3AuthNetwork: "testnet",
           chainConfig: {
             chainNamespace: CHAIN_NAMESPACES.EIP155,
             chainId: "0x13881",
@@ -135,7 +135,7 @@ function Home() {
             chainId: "0x13881",
             rpcTarget: "https://rpc-mumbai.maticvigil.com",
           },
-          web3AuthNetwork: "cyan",
+          web3AuthNetwork: "testnet",
         });
 
         web3auth.configureAdapter(metamaskAdapter);
