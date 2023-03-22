@@ -31,10 +31,11 @@ import {
 import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import { TorusWalletAdapter } from "@web3auth/torus-evm-adapter";
 
-const clientId =
-  "BI21cwkjkcxw0KjiLxEa1_r5bn4DA1gCvKYU9X1u-kSQB8ik-fFlpBoBfeQmSBEPVLiu5k_iBA9qKQXeHPQ9wnw";
+
 
 function Mint() {
+const clientId =
+  "BI21cwkjkcxw0KjiLxEa1_r5bn4DA1gCvKYU9X1u-kSQB8ik-fFlpBoBfeQmSBEPVLiu5k_iBA9qKQXeHPQ9wnw";
   const [nfts, setNfts] = React.useState<Hero[]>([]);
   const [supply, setSupply] = React.useState<number>(0);
   const [balance, setBalance] = React.useState<number[]>([]);
