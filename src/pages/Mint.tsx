@@ -26,10 +26,14 @@ import {
 import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import { TorusWalletAdapter } from "@web3auth/torus-evm-adapter";
 import { create as ipfsHttpClient } from "ipfs-http-client";
-import manu from "../images/manu.jpg";
-import mergeImages from "merge-images";
-
+import { stringify } from "flatted";
+interface Nft {
+  heroId: string;
+  rarityScore:number;
+  dna:string;
+}
 function Mint() {
+
   const projectId = process.env.NEXT_PUBLIC_PROJECT_ID_INFURA;
   const projectSecret = process.env.NEXT_PUBLIC_PROJECT_SECRET_INFURA;
   const auth =
@@ -42,35 +46,47 @@ function Mint() {
       authorization: auth,
     },
   });
-  async function addIPFS(nft: any) {
-    console.log("INIT");
 
-    try {
-      
-      const description = "This is a Premier NFT";
-      const external_url = "https://www.premiernft.io/";
+async function addIPFS(nftObject: Nft) {
+  console.log("INIT", nftObject);
 
-      const data = JSON.stringify({
-        name: `Premier NFT`,
-        description,
-        external_url,
-        id: nft.heroId,
-        background_color: "00FFFFFF",
-        attributes: {
-          tokenId: nft.heroId,
-          team: "Chelsea",
-        },
-      });
+  try {
+    console.log("INIT 2");
 
-      console.log("Metadata JSON:", data);
+    const name = "Premier NFT";
+    const description = "This is a Premier NFT";
+    const external_url = "https://www.premiernft.io/";
+    const id = nftObject.heroId;
 
-      const added2 = await client.add(data);
-      setTokenURI(nft.heroId, added2.path);
-      console.log("Metadata added to IPFS:", added2);
-    } catch (error) {
-      console.error("Error while adding data to IPFS:", error);
-    }
+    console.log("INIT 3");
+
+    const input:any = {
+      name,
+      description,
+      external_url,
+      id,
+      background_color: "00FFFFFF",
+      attributes: {
+        tokenId: id,
+        rarityScore: nftObject.rarityScore.toString(),
+        dna: nftObject.dna,
+      },
+    };
+
+    console.log("INIT INPUT", input);
+
+const data:string = stringify(input);
+
+    console.log("Data:", data);
+
+
+    const result = await client.add(data);
+
+    console.log("Data:", result.path);
+  } catch (error: any) {
+    console.error("Error:", error.message);
   }
+}
   const clientId =
     "BI21cwkjkcxw0KjiLxEa1_r5bn4DA1gCvKYU9X1u-kSQB8ik-fFlpBoBfeQmSBEPVLiu5k_iBA9qKQXeHPQ9wnw";
   const [nfts, setNfts] = React.useState<Hero[]>([]);
@@ -146,17 +162,27 @@ function Mint() {
         ? true
         : false
       : false;
-      
+
   function getImage(input: any) {
     const slic = input.slice(0, 1);
     const slice = slic[0];
     console.log("SLICE", slice);
-    if (slice === "1" || slice === "2") {
+    if (slice === "1") {
       return "/manu.jpg";
-    } else if (slice === "3" || slice === "4") {
+    } else if (slice === "2") {
+      return "/arsenal.jpg";
+    } else if (slice === "3") {
       return "/liverpool.jpg";
-    } else if (slice === "5" || slice === "6" || slice === "7") {
+    } else if (slice === "4") {
+      return "/leeds.jpg";
+    } else if (slice === "5") {
       return "/chelsea.jpg";
+    } else if (slice === "6") {
+      return "/aston.jpg";
+    } else if (slice === "7") {
+      return "/newcas.jpeg";
+    } else if (slice === "8") {
+      return "/tottenham.jpg";
     } else {
       return "/mancity.jpg";
     }
@@ -172,8 +198,6 @@ function Mint() {
   const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(
     null
   );
-
-
 
   useEffect(() => {
     const init = async () => {
@@ -379,11 +403,11 @@ function Mint() {
     await web3auth?.switchChain({ chainId: "0x5" });
     uiConsole("Chain Switched");
   };
-    function sliceAddress(address: string): string {
-      const prefix = address.slice(0, 6);
-      const suffix = address.slice(-4);
-      return `${prefix}...${suffix}`;
-    }
+  function sliceAddress(address: string): string {
+    const prefix = address.slice(0, 6);
+    const suffix = address.slice(-4);
+    return `${prefix}...${suffix}`;
+  }
   const getAccounts = useCallback(async () => {
     if (!provider) {
       uiConsole("provider not initialized yet");
@@ -511,10 +535,10 @@ function Mint() {
       </div>
     </div>
   );
-function formatTimestamp(timestamp: number): string {
-  const date = new Date(timestamp * 1000); // Multiply by 1000 to convert seconds to milliseconds
-  return date.toLocaleString("en-US");
-}
+  function formatTimestamp(timestamp: number): string {
+    const date = new Date(timestamp * 1000); // Multiply by 1000 to convert seconds to milliseconds
+    return date.toLocaleString("en-US");
+  }
   return (
     <div className="flex flex-col h-screen justify-between">
       <div>
@@ -631,7 +655,7 @@ function formatTimestamp(timestamp: number): string {
                                 <img
                                   src={getImage(ep.dna)}
                                   alt="cat-img"
-                                  className="max-w-[18rem]"
+                                  className="w-full max-w-[15rem] max-h-[8rem]"
                                 />
                               </button>
                             </div>
@@ -662,6 +686,8 @@ function formatTimestamp(timestamp: number): string {
                                 This is Player #{ep.heroId}
                                 <br />
                                 DNA: {ep.genes}
+                                <br />
+                                Rarity: {ep.rarityScore}
                                 <br />
                                 Genes: {ep.dna}
                                 <br />
@@ -709,9 +735,7 @@ function formatTimestamp(timestamp: number): string {
                       <img
                         src={getImage(ep.dna)}
                         alt="cat-img"
-                        style={{
-                          ...{ width: "500px", maxWidth: "100%" },
-                        }}
+                        className="w-full max-w-[15rem] max-h-[8rem]"
                       />
                       <p
                         style={{
